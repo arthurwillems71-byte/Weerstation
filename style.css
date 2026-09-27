@@ -1,0 +1,616 @@
+:root {
+  --bg-color: #eef3f7;
+  --card-bg: #ffffff;
+  --text-color: #1f2937;
+  --muted-color: #6b7280;
+  --accent-color: #24b47e;
+  --border-color: #e5e7eb;
+}
+
+/* =========================
+   BASIS
+   ========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 30px 20px 50px;
+  min-height: 100vh;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin: 10px 0 5px;
+  font-weight: 700;
+}
+
+.timestamp {
+  text-align: center;
+  color: var(--muted-color);
+  font-size: 0.9rem;
+  margin-bottom: 35px;
+}
+
+/* =========================
+   RECHTSBOVEN
+   ========================= */
+
+.top-right {
+  position: fixed;
+  top: 18px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1000;
+}
+
+.battery-indicator {
+  background: var(--card-bg);
+  padding: 7px 10px;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+#darkModeKnop {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 10px;
+  background: var(--card-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 1.1rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+#darkModeKnop:hover {
+  transform: scale(1.08);
+}
+
+/* =========================
+   ALGEMENE KAARTEN
+   ========================= */
+
+.card,
+.temperature-stats > div,
+.temperature-chart,
+.table-container,
+.weather-forecast {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.card:hover,
+.temperature-stats > div:hover,
+.temperature-chart:hover,
+.table-container:hover,
+.weather-forecast:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================
+   SENSOR KAARTEN
+   ========================= */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.card {
+  padding: 28px 20px;
+  text-align: center;
+}
+
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  color: var(--muted-color);
+  font-weight: 600;
+}
+
+.value {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.card .value {
+  transition: transform 0.25s ease;
+}
+
+.card:hover .value {
+  transform: scale(1.08);
+}
+
+.unit {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--muted-color);
+}
+
+/* =========================
+   TEMPERATUUR STATISTIEKEN
+   ========================= */
+
+.temperature-stats {
+  width: 100%;
+  max-width: 1000px;
+  margin: 25px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.temperature-stats > div {
+  padding: 18px;
+  text-align: center;
+}
+
+.temperature-stats span {
+  display: block;
+  color: var(--muted-color);
+  font-size: 0.75rem;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.temperature-stats strong {
+  font-size: 1.5rem;
+}
+
+/* =========================
+   GRAFIEK
+   ========================= */
+
+.temperature-chart {
+  width: 100%;
+  max-width: 1000px;
+  margin: 25px auto 0;
+  padding: 25px;
+}
+
+.temperature-chart h2 {
+  margin: 0 0 20px;
+  text-align: left;
+  font-size: 1.2rem;
+}
+
+#temperatuurGrafiek {
+  width: 100% !important;
+  height: 350px !important;
+}
+
+/* =========================
+   PERIODE KNOPPEN
+   ========================= */
+
+.periode-knoppen {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.periode-knoppen button {
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.periode-knoppen button:hover {
+  transform: translateY(-2px);
+}
+
+.periode-knoppen button.actief {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+/* =========================
+   GESCHIEDENIS
+   ========================= */
+
+.history {
+  width: 100%;
+  max-width: 1000px;
+  margin: 25px auto 0;
+}
+
+.table-container {
+  overflow: hidden;
+}
+
+.table-container h2 {
+  margin: 0;
+  padding: 20px 25px;
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.history-scroll {
+  max-height: 500px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: #f8fafc;
+  color: var(--muted-color);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+th,
+td {
+  padding: 14px 12px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+td {
+  font-size: 0.9rem;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* =========================
+   WEERSVERWACHTING
+   ========================= */
+
+.weather-forecast {
+  width: 100%;
+  max-width: 1000px;
+  margin: 25px auto 0;
+  padding: 25px;
+}
+
+.weather-forecast h2 {
+  margin: 0 0 20px;
+  font-size: 1.2rem;
+}
+
+#weersverwachting {
+  font-size: 1rem;
+  color: var(--muted-color);
+}
+
+.forecast-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 5px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.forecast-item:last-child {
+  border-bottom: none;
+}
+
+.forecast-item span:nth-child(2) {
+  font-size: 1.5rem;
+}
+
+/* =========================
+   LUCHTDRUK TREND
+   ========================= */
+
+#drukTrend,
+#tempTrend,
+#vochtTrend {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  color: var(--muted-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+#drukTrend:hover,
+#tempTrend:hover,
+#vochtTrend:hover {
+  transform: scale(1.05);
+}
+/* =========================
+   BATTERIJ WAARSCHUWING
+   ========================= */
+
+.battery-warning {
+  display: none;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto 20px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffe69c;
+}
+
+.battery-warning.visible {
+  display: block;
+}
+
+body.dark-mode .battery-warning {
+  background: #3b3218;
+  color: #ffd966;
+  border-color: #665522;
+}
+
+/* =========================
+   FOUTMELDING
+   ========================= */
+
+.error {
+  color: #ef4444;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* =========================
+   DONKERE MODUS
+   ========================= */
+
+body.dark-mode {
+  --bg-color: #0f172a;
+  --card-bg: #1e293b;
+  --text-color: #f1f5f9;
+  --muted-color: #94a3b8;
+  --border-color: #334155;
+}
+
+body.dark-mode th {
+  background: #172033;
+}
+
+body.dark-mode .card,
+body.dark-mode .temperature-stats > div,
+body.dark-mode .temperature-chart,
+body.dark-mode .table-container,
+body.dark-mode .weather-forecast,
+body.dark-mode .battery-indicator,
+body.dark-mode #darkModeKnop {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================
+   TABLET
+   ========================= */
+
+@media (max-width: 850px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* =========================
+   MOBIEL
+   ========================= */
+
+@media (max-width: 600px) {
+
+  body {
+    padding: 75px 12px 30px;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+    margin-top: 0;
+  }
+
+  .timestamp {
+    font-size: 0.75rem;
+    margin-bottom: 25px;
+  }
+
+  /* Bovenste knoppen */
+
+  .top-right {
+    top: 10px;
+    right: 10px;
+  }
+
+  .battery-indicator {
+    font-size: 0.75rem;
+    padding: 6px 8px;
+  }
+
+  #darkModeKnop {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Sensor kaarten */
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .card {
+    padding: 22px 15px;
+    border-radius: 15px;
+  }
+
+  .value {
+    font-size: 2rem;
+  }
+
+  /* Statistieken */
+
+  .temperature-stats {
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .temperature-stats > div {
+    padding: 12px 5px;
+  }
+
+  .temperature-stats span {
+    font-size: 0.65rem;
+  }
+
+  .temperature-stats strong {
+    font-size: 1.1rem;
+  }
+
+  /* Grafiek */
+
+  .temperature-chart {
+    margin-top: 18px;
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  .temperature-chart h2 {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+
+  #temperatuurGrafiek {
+    height: 260px !important;
+  }
+
+  /* Periode knoppen */
+
+  .periode-knoppen {
+    gap: 6px;
+  }
+
+  .periode-knoppen button {
+    flex: 1;
+    padding: 8px 5px;
+    font-size: 0.8rem;
+  }
+
+  /* Meetgeschiedenis */
+
+  .history {
+    margin-top: 18px;
+  }
+
+  .table-container {
+    border-radius: 15px;
+  }
+
+  .table-container h2 {
+    padding: 15px;
+    font-size: 1rem;
+  }
+
+  .history-scroll {
+    max-height: 450px;
+    overflow: auto;
+  }
+
+  .history table {
+    min-width: 0;
+  }
+
+  .history th,
+  .history td {
+    padding: 10px 6px;
+    font-size: 0.7rem;
+  }
+
+  .history th {
+    white-space: nowrap;
+  }
+
+  /* Weersverwachting */
+
+  .weather-forecast {
+    margin-top: 18px;
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  .weather-forecast h2 {
+    font-size: 1rem;
+  }
+
+  .forecast-item {
+    padding: 10px 2px;
+  }
+}
+
+#tempTrend,
+#vochtTrend {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted-color);
+}
+.water-knop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 38px;
+    padding: 0 12px;
+
+    background: var(--card-bg);
+    color: var(--text-color);
+
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.water-knop:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}

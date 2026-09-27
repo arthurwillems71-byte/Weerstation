@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watertemperatuur</title>
+
+    <link rel="stylesheet" href="water.css">
+</head>
+
+<body>
+    <div class="navigatie">
+        <a href="index.html" class="terug-knop">← Weerstation</a>
+    </div>
+
+    <div class="water-top-right">
+        <button id="waterDarkModeKnop">🌙</button>
+    </div>
+
+    <h1>🌊 Watertemperatuur</h1>
+
+    <div class="water-invoer">
+        <h2>Nieuwe meting</h2>
+
+        <input
+            type="number"
+            id="waterTemperatuur"
+            step="0.1"
+            placeholder="Watertemperatuur °C"
+        >
+
+        <button onclick="waterMetingOpslaan()">
+            Meting opslaan
+        </button>
+    </div>
+
+    <div class="water-huidig">
+        <h2>Huidige watertemperatuur</h2>
+        <div id="huidigeWaterTemperatuur">-- °C</div>
+    </div>
+
+    <div class="water-grafiek">
+        <h2>Watertemperatuur</h2>
+
+        <div class="periode-knoppen">
+            <button onclick="veranderWaterPeriode('dag', this)">
+                Vandaag
+            </button>
+
+            <button onclick="veranderWaterPeriode('week', this)">
+                Week
+            </button>
+
+            <button onclick="veranderWaterPeriode('maand', this)" class="actief">
+                Maand
+            </button>
+
+            <button onclick="veranderWaterPeriode('jaar', this)">
+                Jaar
+            </button>
+
+            <button onclick="veranderWaterPeriode('alles', this)">
+                Alles
+            </button>
+        </div>
+
+        <canvas id="waterGrafiek"></canvas>
+    </div>>
+
+    <div class="water-geschiedenis">
+        <h2>Meetgeschiedenis</h2>
+
+        <div class="water-tabel-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Tijd</th>
+                        <th>Temperatuur</th>
+                    </tr>
+                </thead>
+
+                <tbody id="waterGeschiedenis">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const donkereModus = localStorage.getItem('donkereModus') === 'aan';
+
+        if (donkereModus) {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+
+    <script src="water.js"></script>
+
+</body>
+</html>

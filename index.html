@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WeerApp</title>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+
+</head>
+<body>
+
+  <div id="batterijMelding" class="battery-warning"></div>
+
+  <div class="top-right">
+    <div class="battery-indicator">
+    🔋 <span id="batterij">--</span> 
+    </div>
+
+    <button id="darkModeKnop">🌙</button>
+    <a href="water.html" class="water-knop">🌊 Water</a>
+  </div>
+
+
+  <h1>Weerstation Dashboard</h1>
+  <div class="timestamp" id="tijdstip">Laden van gegevens...</div>
+  <div class="error" id="error-bericht"></div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Temperatuur</h2>
+      <div class="value" id="temp">-- <span class="unit">°C</span></div>
+      <div id="tempTrend" class="druks-trend"></div>
+    </div>
+    <div class="card">
+      <h2>Luchtdruk</h2>
+        <div class="value" id="druk">-- <span class="unit">hPa</span></div>
+        <div id="drukTrend" class="druks-trend"></div>
+    </div>
+    <div class="card">
+      <h2>Luchtvochtigheid</h2>
+      <div class="value" id="vocht">-- <span class="unit">%</span></div>
+      <div id="vochtTrend" class="druks-trend"></div>
+    </div>
+  </div>
+
+  <div class="temperature-stats">
+    <div>
+      <span>MAX</span>
+      <strong id="tempMax">-- °C</strong>
+    </div>
+    
+    <div>
+      <span>GEMIDDELD</span>
+      <strong id="tempGemiddeld">-- °C</strong>
+    </div>
+    
+    <div>
+      <span>MIN</span>
+      <strong id="tempMin">-- °C</strong>
+    </div>
+  </div>
+
+  <div class="weather-forecast">
+    <h2>🌤️ Weersverwachting</h2>
+    <div id="weersverwachting">
+      Verwachting laden...
+    </div>
+  </div>
+
+  <div class="temperature-chart">
+    <h2 id="grafiekTitel">Temperatuur laatste maand</h2>
+    <div class="periode-knoppen">
+      <button onclick="veranderPeriode('dag', this)">Vandaag</button>
+      <button onclick="veranderPeriode('week', this)">Week</button>
+      <button onclick="veranderPeriode('maand', this)" class="actief">Maand</button>
+      <button onclick="veranderPeriode('jaar', this)">Jaar</button>
+      <button onclick="veranderPeriode('alles', this)">Alles</button>
+    </div>
+    <canvas id="temperatuurGrafiek"></canvas>
+  </div>
+
+  <div class="history">
+    <div class="table-container">
+
+      <h2>📋 Meetgeschiedenis</h2>
+
+      <div class="history-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Datum</th>
+              <th>Temperatuur</th>
+              <th>Luchtdruk</th>
+              <th>Vochtigheid</th>
+            </tr>
+          </thead>
+          <tbody id="geschiedenis"></tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
