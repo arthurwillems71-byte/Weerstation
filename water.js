@@ -362,70 +362,89 @@ function waterGrafiekMaken(data) {
     } else {
 
         // =========================
-        // NORMALE PERIODES
+        // WEEK / MAAND / JAAR
         // =========================
 
-        if (huidigeWaterPeriode === 'jaar') {
+        const groepen = {};
 
-            labels = data.map(meting => {
+        data.forEach(meting => {
+        
+            const datum = new Date(meting.created_at);
+            let sleutel;
+        
+            if (huidigeWaterPeriode === 'jaar') {
+            
+                // Per maand
+                datum.setDate(1);
+                datum.setHours(0, 0, 0, 0);
+                sleutel = datum.getTime();
+            
+            } else {
+            
+                // Per dag
+                datum.setHours(0, 0, 0, 0);
+                sleutel = datum.getTime();
+            }
+        
+            if (!groepen[sleutel]) {
+                groepen[sleutel] = [];
+            }
+        
+            groepen[sleutel].push(
+                Number(meting.temperatuur)
+            );
+        });
 
-                const datum =
-                    new Date(meting.created_at);
+        const nieuweLabels = [];
+        const gemiddelden = [];
 
-                return datum.toLocaleDateString(
-                    'nl-BE',
-                    {
-                        month: 'short'
-                    }
-                );
-            });
-
-        } else {
-
-            labels = data.map(meting => {
-
-                const datum =
-                    new Date(meting.created_at);
-
-                if (
-                    huidigeWaterPeriode === 'dag'
-                ) {
-
-                    return datum.toLocaleTimeString(
-                        'nl-BE',
-                        {
-                            hour: '2-digit',
-                            minute: '2-digit'
-                        }
+        Object.keys(groepen)
+            .sort((a, b) => Number(a) - Number(b))
+            .forEach(sleutel => {
+            
+                const waarden = groepen[sleutel];
+                const datum = new Date(Number(sleutel));
+            
+                const gemiddelde =
+                    waarden.reduce(
+                        (som, waarde) => som + waarde,
+                        0
+                    ) / waarden.length;
+                
+                if (huidigeWaterPeriode === 'jaar') {
+                
+                    // Eén punt per maand
+                    nieuweLabels.push(
+                        datum.toLocaleDateString('nl-BE', {
+                            month: 'short'
+                        })
                     );
-
+                
+                } else {
+                
+                    // Eén punt per dag
+                    nieuweLabels.push(
+                        datum.toLocaleDateString('nl-BE', {
+                            day: '2-digit',
+                            month: '2-digit'
+                        })
+                    );
                 }
-
-                return datum.toLocaleDateString(
-                    'nl-BE',
-                    {
-                        day: '2-digit',
-                        month: '2-digit'
-                    }
+            
+                gemiddelden.push(
+                    Number(gemiddelde.toFixed(1))
                 );
             });
-        }
-
+        
+        labels = nieuweLabels;
+        
         datasets = [
             {
-                label: 'Watertemperatuur',
-
-                data: data.map(
-                    meting =>
-                        Number(meting.temperatuur)
-                ),
-
+                label: 'Gemiddelde watertemperatuur',
+                data: gemiddelden,
                 tension: 0.3,
-
                 fill: false,
-
                 pointRadius: 4,
-
                 pointHoverRadius: 7
             }
         ];
